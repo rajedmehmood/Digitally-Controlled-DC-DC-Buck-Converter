@@ -48,3 +48,92 @@ The converter steps down a 12V DC input to an adjustable regulated output suitab
 12V DC → MOSFET → Inductor → Output → Load
                   ↓
                Diode
+```
+
+---
+
+## Buck Converter Equation
+
+- Vout = D × Vin
+
+Where:
+- Vout = Output Voltage
+- D = Duty Cycle
+- Vin = Input Voltage
+
+---
+
+## PWM Control
+
+The ESP32 generates a 25 kHz PWM signal to control the MOSFET switching.
+
+---
+
+## Protection Features
+
+- Hardware Fuse Protection
+- Software Overcurrent Protection
+- Thermal Considerations
+- Decoupling Capacitors
+
+---
+
+## Experimental Analysis
+
+The following characteristics are evaluated:
+
+- Duty Cycle vs Output Voltage
+- Efficiency vs Load
+- Ripple Voltage
+- CCM and DCM operation
+- Thermal performance
+
+---
+
+## Software Features
+
+- Real-time monitoring
+- Serial Plotter graphs
+- Adjustable duty cycle through serial monitor
+- Power calculation
+- Efficiency estimation
+
+---
+
+## Upload Instructions
+
+- Install ESP32 Board Package
+- Install Adafruit INA219 Library
+- Select ESP32 Dev Module
+- Upload firmware
+
+---
+
+## Expected Results
+
+| Duty Cycle | Expected Output |
+|-----------|--------------|
+| 30% | 3.6V |
+| 50% | 6V |
+| 70% | 8.4V |
+
+---
+
+## Future Work
+
+- Closed-loop PID control
+- IoT cloud monitoring
+- AI-based fault prediction
+- Smart Grid integration
+- GridGuardian architecture implementation
+
+---
+
+## Authors
+
+- Rajed Mehmood (2023-EE-400)
+- Abdul Rafay Nadeem (2023-EE-410)
+- M. Suleman Fazal (2023-EE-428)
+- M. Meer Hamza (2023-EE-436)
+
+Department of Electrical, Electronics and Telecommunication Engineering, UET Lahore Faisalabad Campus
