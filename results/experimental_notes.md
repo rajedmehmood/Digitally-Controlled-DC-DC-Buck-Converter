@@ -1,16 +1,16 @@
-\# Experimental Notes
+# Experimental Notes
 
 
 
 Tests Performed:
 
-\- Duty Cycle Sweep
+- Duty Cycle Sweep
 
-\- Efficiency Analysis
+- Efficiency Analysis
 
-\- Ripple Measurement
+- Ripple Measurement
 
-\- CCM/DCM Observation
+- CCM/DCM Observation
 
-\- Thermal Observation
+- Thermal Observation
 
