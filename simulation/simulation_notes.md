@@ -1,22 +1,21 @@
-\# Simulation Notes
+# Simulation Notes
 
 
 
 Software Used:
 
-\- MATLAB Simulink
-
+- MATLAB Simulink
 
 
 Simulation Includes:
 
-\- PWM Generation
+- PWM Generation
 
-\- Buck Converter Model
+- Buck Converter Model
 
-\- Duty Cycle Variation
+- Duty Cycle Variation
 
-\- Current Ripple
+- Current Ripple
 
-\- Output Voltage Ripple
+- Output Voltage Ripple
 
