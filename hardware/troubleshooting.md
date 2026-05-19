@@ -1,16 +1,17 @@
 # Troubleshooting
 
-## Low Output Voltage
-- Check MOSFET gate signal
-- Verify diode orientation
-- Ensure PWM generation
+## No Output Voltage
+- Check PWM
+- Check Ground
+- Check MOSFET
+
+## Output Drops Under Load
+- Check inductor current rating
+- Check diode orientation
 
 ## MOSFET Heating
-- Use heat sink
-- Reduce switching frequency
-- Verify gate drive
+- Check gate drive
+- Add heat sink
 
-## No Output
-- Check common ground
-- Verify ESP32 PWM pin
-- Verify supply voltage
+## Wrong Readings
+- Verify common ground
