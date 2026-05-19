@@ -10,7 +10,6 @@ Tests Performed:
 
 - Ripple Measurement
 
-- CCM/DCM Observation
 
 - Thermal Observation
 
