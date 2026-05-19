@@ -3,105 +3,110 @@
 
 Adafruit_INA219 ina219;
 
-// PWM Configuration
 const int pwmPin = 25;
-const int pwmChannel = 0;
+
 const int pwmFreq = 25000;
 const int pwmResolution = 8;
-int dutyCycle = 128; // Default 50%
+
+int dutyPercent = 30;
+int dutyValue = 76;
+
 float Vin = 12.0;
-// Protection Threshold
-float maxCurrent = 3.0; // 3A limit
+
+float maxCurrent = 1.2;
+
+float Vout = 0;
+float current_A = 0;
+
+float powerOut = 0;
+float powerIn = 0;
+
+float efficiency = 0;
+
 void setup() {
+
   Serial.begin(115200);
-  // INA219 Init
+
+  ledcAttach(pwmPin, pwmFreq, pwmResolution);
+
+  ledcWrite(pwmPin, dutyValue);
+
   if (!ina219.begin()) {
-    Serial.println("INA219 not found!");
+
+    Serial.println("INA219 NOT FOUND");
+
     while (1);
   }
-  // PWM Setup
-  ledcAttach(pwmChannel, pwmFreq, pwmResolution);
-  ledcWrite(pwmPin, pwmChannel);
-  Serial.println("System Ready");
-  Serial.println("Enter Duty Cycle (0–100):");
+
+  Serial.println("SYSTEM READY");
 }
 
 void loop() {
 
-  // ===== SERIAL DUTY CONTROL =====
-  if (Serial.available() > 0) {
+  if (Serial.available()) {
 
-    String inputString = Serial.readStringUntil('\n');
-    inputString.trim();
+    String input = Serial.readStringUntil('\n');
 
-    int input = inputString.toInt();
+    input.trim();
 
-    // Accept only valid range
-    if (input >= 0 && input <= 100) {
+    int newDuty = input.toInt();
 
-      dutyCycle = map(input, 0, 100, 0, 255);
+    if (newDuty >= 0 && newDuty <= 90) {
 
-      Serial.print("New Duty Cycle: ");
-      Serial.print(input);
-      Serial.println("%");
+      dutyPercent = newDuty;
+
+      dutyValue = map(dutyPercent, 0, 100, 0, 255);
+
+      ledcWrite(pwmPin, dutyValue);
+
+      Serial.print("Duty Updated: ");
+      Serial.println(dutyPercent);
     }
   }
 
-  // PWM OUTPUT
-  ledcWrite(pwmPin, dutyCycle);
+  ledcWrite(pwmPin, dutyValue);
 
-  // ===== SENSOR READINGS =====
-  float Vout = ina219.getBusVoltage_V();
-  float current_A = ina219.getCurrent_mA() / 1000.0;
+  Vout = ina219.getBusVoltage_V();
 
-  float Pout = Vout * current_A;
-  float Pin = Vin * current_A;
+  current_A = ina219.getCurrent_mA() / 1000.0;
 
-  float efficiency = 0;
+  powerOut = Vout * current_A;
 
-  if (Pin > 0) {
-    efficiency = (Pout / Pin) * 100.0;
+  powerIn = Vin * current_A;
+
+  if (powerIn > 0.01) {
+
+    efficiency = (powerOut / powerIn) * 100.0;
   }
 
-  // ===== OVERCURRENT PROTECTION =====
   if (current_A > maxCurrent) {
 
     ledcWrite(pwmPin, 0);
 
-    Serial.println("⚠️ Overcurrent Shutdown");
+    Serial.println("OVERCURRENT");
 
     while (1);
   }
 
-  // ===== SERIAL MONITOR =====
-  Serial.print("Duty: ");
-  Serial.print((dutyCycle / 255.0) * 100);
-  Serial.print("%  ");
-
-  Serial.print("Vout: ");
+  Serial.print("Voltage: ");
   Serial.print(Vout);
-  Serial.print(" V  ");
 
-  Serial.print("Current: ");
+  Serial.print(" Current: ");
   Serial.print(current_A);
-  Serial.print(" A  ");
 
-  Serial.print("Power: ");
-  Serial.print(Pout);
-  Serial.print(" W  ");
+  Serial.print(" Power: ");
+  Serial.print(powerOut);
 
-  Serial.print("Efficiency: ");
-  Serial.print(efficiency);
-  Serial.println(" %");
+  Serial.print(" Efficiency: ");
+  Serial.println(efficiency);
 
-  // ===== SERIAL PLOTTER =====
   Serial.print(Vout);
   Serial.print(" ");
 
   Serial.print(current_A);
   Serial.print(" ");
 
-  Serial.print(Pout);
+  Serial.print(powerOut);
   Serial.print(" ");
 
   Serial.println(efficiency);
