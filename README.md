@@ -8,7 +8,7 @@
 
 ## Overview
 
-This project presents the design and implementation of a digitally controlled DC-DC buck converter using an ESP32 microcontroller for PWM generation and an INA219 sensor for real-time voltage and current monitoring.
+This project presents the design and implementation of a digitally controlled DC-DC buck converter using an ESP32 microcontroller for PWM generation and a TC4420 gate driver, and an INA219 sensor for real-time voltage and current monitoring.
 
 The converter steps down a 12V DC input to an adjustable regulated output suitable for smart energy node applications.
 
@@ -16,14 +16,14 @@ The converter steps down a 12V DC input to an adjustable regulated output suitab
 
 ## Features
 
-- ESP32-based PWM control
+- ESP32 PWM generation
+- TC4420 MOSFET gate driver
 - Adjustable duty cycle
 - INA219 voltage/current sensing
-- Real-time efficiency calculation
+- Real-time monitoring
+- Efficiency calculation
 - Overcurrent protection
-- Serial Plotter visualization
-- CCM and DCM analysis
-- Experimental performance evaluation
+- Serial Plotter graphs
 - Smart energy node architecture foundation
 
 ---
@@ -33,21 +33,24 @@ The converter steps down a 12V DC input to an adjustable regulated output suitab
 | Component | Specification |
 |-----------|--------------|
 | ESP32 | ESP32 DevKit |
-| MOSFET | IRLZ44N |
-| Diode | MBR1045 Schottky |
-| Inductor | 150 µH, 4A |
-| Capacitor | 220 µF |
+| MOSFET | MTA30N06HD |
+| Gate Driver | TC4420 |
+| Diode | SR1645 Schottky |
+| Toroidal Inductor | 150 µH, 5A |
+| Capacitors | 220,10,0.1 µF |
 | Sensor | INA219 |
+| Resistor | 100, 10k ohm |
 | Load | 10Ω Power Resistor |
+| Power Adapter | 12V, 1.5A |
 
 ---
 
 ## System Architecture
 
 ```plaintext
-12V DC → MOSFET → Inductor → Output → Load
-                  ↓
-               Diode
+12V DC → TC4420 → MOSFET → Inductor → Output → Load
+                          ↓
+                        Diode
 ```
 
 ---
@@ -85,9 +88,17 @@ The following characteristics are evaluated:
 - Duty Cycle vs Output Voltage
 - Efficiency vs Load
 - Ripple Voltage
-- CCM and DCM operation
 - Thermal performance
 
+---
+
+## Applications
+
+- Smart energy systems
+- Power electronics education
+- IoT energy nodes
+- Embedded power systems
+  
 ---
 
 ## Software Features
