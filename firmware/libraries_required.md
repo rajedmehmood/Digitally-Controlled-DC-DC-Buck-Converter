@@ -1,6 +1,6 @@
 # Required Libraries
 
-Install:
+Install using Arduino Library Manager:
 
 - Adafruit INA219
-- Wire Library
+- Adafruit BusIO
