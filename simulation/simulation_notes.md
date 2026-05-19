@@ -19,3 +19,15 @@ Simulation Includes:
 
 - Output Voltage Ripple
 
+
+Switching frequency:
+25kHz
+
+Input:
+12V
+
+Load:
+10Ω
+
+PWM duty varied from:
+20% to 70%
